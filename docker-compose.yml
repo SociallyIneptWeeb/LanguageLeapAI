@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+  whisper:
+    image: onerahmet/openai-whisper-asr-webservice:latest-gpu
+    environment:
+      ASR_MODEL: small
+    ports:
+      - "9000:9000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  voicevox:
+    image: voicevox/voicevox_engine:nvidia-ubuntu20.04-latest
+    ports:
+      - "50021:50021"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
