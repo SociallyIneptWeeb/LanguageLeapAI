@@ -36,6 +36,15 @@ This is required for python to know which audio device to listen from or play au
 Run [get_audio_device_ids.py](../src/modules/get_audio_device_ids.py) in order to obtain the id for your audio devices.
 The output from running this command may be truncated but do your best to select the correct id for the audio device.
 
+## Voicevox Settings
+
+Choose which speaker to use from Voicevox by updating VOICE_ID. 
+Send a curl request to get a list of all speaker IDs and their corresponding speakers.
+Replace <VOICEVOX_BASE_URL> with the url that Voicevox is hosted at.
+
+```curl <VOICEVOX_BASE_URL>/speakers```
+
+Feel free to adjust the scaling of the speaker's volume, speed or intonation as well.
 
 ## Subtitle Settings
 
