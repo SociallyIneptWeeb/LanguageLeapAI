@@ -24,7 +24,9 @@ def translate(filepath, language):
     try:
         with open(filepath, 'rb') as infile:
             files = {'audio_file': infile}
-            r = requests.post(f'{BASE_URL}/asr?task=translate&language={language}&output=json', files=files, timeout=REQUEST_TIMEOUT)
+            r = requests.post(f'{BASE_URL}/asr?task=translate&language={language}&output=json',
+                              files=files,
+                              timeout=REQUEST_TIMEOUT)
     except requests.exceptions.Timeout:
         print('Request timeout')
         return None

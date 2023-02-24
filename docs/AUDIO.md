@@ -41,11 +41,22 @@ For the application whose audio you want to translate, e.g. Apex, Valorant, Disc
 This sends the application's audio into the AUX cable.
 Also set the application's audio input device to CABLE Output (VB-Audio Virtual Cable). This cable is where the TTS audio will be played into.
 
-![](screenshots\app_io_devices.png?raw=true)
+![](screenshots/app_io_devices.png?raw=true)
+
+For applications like Google Chrome, you may also configure their application's audio I/O device via your computer's Volume mixer settings.
+
+![](screenshots/chrome_audio_devices.png?raw=true)
 
 For full-screen applications like Apex Legends, set the Display Mode to Borderless Window so that subtitles can be displayed over it.
 
-![](screenshots\borderless_window.png?raw=true)
+![](screenshots/borderless_window.png?raw=true)
 
+
+### Other useful application settings
+
+You may also turn down the dialogue volume and other settings which may interfere with what Whisper attempts to translate.
+You can adjust this to the point where WhisperAI's accuracy is not affected by other audio sources and your user experience is not affected as well.
+
+![](screenshots/app_volume_levels.png?raw=true)
 
 After setting up the audio routing, we can finally move on to the last step of the setup: [Writing your Environment file](ENV.md).

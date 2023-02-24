@@ -79,11 +79,26 @@ Setting up **LanguageLeapAI** requires 3 crucial steps, so don't miss out on any
 
 ## Usage
 
-To run **LanguageLeapAI**, you need to first run the WhisperAI and Voicevox docker containers. Then you can run the 2 python scripts.
+To run **LanguageLeapAI**, you need to first run WhisperAI and Voicevox.
+
+For this project, Voicevox can only be run in a docker container. However, WhisperAI can either be run via Docker or using Google Colab.
+
+### Google Colab
+
+If you're GPU is not fast enough, you may want to consider running WhisperAI using Google Colab's GPU.
+Upload [run_whisper_colab.ipynb](src/run_whisper_colab.ipynb) file to Google drive, open the notebook with Google Colab and simply follow the instructions!
+
+To run Voicevox in a docker container on your computer, run the following command in the root folder containing the [docker-compose.yml](docker-compose.yml) file:
+
+```docker-compose start voicevox```
+
+To stop running Voicevox:
+
+```docker-compose down```
 
 ### Docker
 
-Run these commands in the root folder containing the [docker-compose.yml](docker-compose.yml) file.
+If you still want to run both Whisper and Voicevox on your computer, run these commands in the root folder containing the [docker-compose.yml](docker-compose.yml) file.
 
 To run both WhisperAI and Voicevox:
 
