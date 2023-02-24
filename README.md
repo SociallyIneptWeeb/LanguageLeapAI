@@ -90,7 +90,7 @@ Upload [run_whisper_colab.ipynb](src/run_whisper_colab.ipynb) file to Google dri
 
 To run Voicevox in a docker container on your computer, run the following command in the root folder containing the [docker-compose.yml](docker-compose.yml) file:
 
-```docker-compose start voicevox```
+```docker-compose up -d voicevox```
 
 To stop running Voicevox:
 
@@ -106,11 +106,11 @@ To run both WhisperAI and Voicevox:
 
 For users who only want to run the audio subtitler, they have the option of only running WhisperAI's docker container:
 
-```docker-compose start whisper```
+```docker-compose up -d whisper```
 
 For users who only want to run Voicevox:
 
-```docker-compose start voicevox```
+```docker-compose up -d voicevox```
 
 To stop running the containers:
 
