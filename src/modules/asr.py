@@ -34,7 +34,7 @@ def translate(filepath, language):
     translation = r.json()['text'].strip()
 
     # remove most hallucinations
-    if translation.startswith('Thank you for'):
+    if translation.lower().startswith('thank you for'):
         return None
 
     return translation

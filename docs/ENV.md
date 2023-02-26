@@ -13,8 +13,8 @@ Set to _False_ if you want to disable logging.
 
 ## Services Urls 
 
-These are the base urls for the Whisper and Voicevox docker containers. You can leave it as localhost if you are running these containers on your local machine.
-If you are running these containers on the cloud or using a different port number, be sure to update these variables with the appropriate urls and ports.
+These are the base urls for the Whisper and Voicevox services. You can leave it as localhost if you are running these on your local machine.
+If you are running them using Google Colab or on a different port number, be sure to update these variables with the appropriate urls and ports.
 
 ## DeepL Authentication Key
 

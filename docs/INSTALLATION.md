@@ -4,11 +4,13 @@
 
 So you want to try out **LanguageLeapAI** huh? 
 Do note that running WhisperAI and Voicevox on your local machine is not recommended as a significant amount of RAM and GPU power is required for the program to run efficiently.
-If possible, you should run these 2 docker containers on another server either on your local network or on the cloud. 
+If possible, you should run these 2 on another server either on your local network or on the cloud. 
 
 ## Installing Services
 
 ### Docker
+
+If you are using Google Colab notebooks to run Whisper AI and Voicevox, you can skip installing Docker Compose.
 
 If you are planning on running the docker containers, you will have to ensure that you have Docker Compose installed.
 You may follow these instructions [here](https://docs.docker.com.zh.xy2401.com/v17.12/compose/install/) to install Docker Compose.
