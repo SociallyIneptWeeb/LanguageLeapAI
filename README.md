@@ -110,7 +110,7 @@ To run the Audio Subtitler:
 
 To run the Voice Translator:
 
-```python voice_translate.py```
+```python voice_translator.py```
 
 To stop the python scripts, simply press `Ctrl+C` in the terminal.
 
