@@ -1,0 +1,2 @@
+python translator.py
+pause
