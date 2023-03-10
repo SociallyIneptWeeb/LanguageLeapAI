@@ -73,7 +73,7 @@ The user can choose to not run [subtitler.py](src/subtitler.py) and simply use [
 
 Setting up **LanguageLeapAI** requires 3 crucial steps, so don't miss out on any of them!
 1. [Installing Services and Dependencies](docs/INSTALLATION.md)
-2. [Audio Routing](#audio-routing)
+2. [Audio Routing](docs/AUDIO.md)
 3. [Writing your Environment file](docs/ENV.md)
 
 
