@@ -90,5 +90,6 @@ if __name__ == '__main__':
                 frames.append(data)
             else:
                 sleep(0.5)
+
     except KeyboardInterrupt:
         print('Closing voice translator.')

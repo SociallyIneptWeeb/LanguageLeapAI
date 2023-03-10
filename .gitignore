@@ -7,5 +7,8 @@ __pycache__/
 .env
 venv/
 
+# Audio files
+src/audio/*.wav
+
 # PyCharm settings
 .idea

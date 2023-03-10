@@ -5,6 +5,7 @@ from queue import Queue
 from threading import Thread
 from time import sleep
 
+import requests
 import speech_recognition as sr
 
 from .asr import translate
@@ -18,7 +19,14 @@ APP_AUDIO_WAV_PATH = r'audio\app_audio.wav'
 
 
 def request_thread(queue, phrase_time, now):
-    translation = translate(APP_AUDIO_WAV_PATH, INPUT_LANGUAGE)
+    try:
+        translation = translate(APP_AUDIO_WAV_PATH, INPUT_LANGUAGE)
+    except requests.exceptions.JSONDecodeError:
+        # Whisper is not thread-safe, see https://github.com/openai/whisper/discussions/296
+        # However, if we do not want a single request to block future audio, just catch the error
+        print('Too many requests to process at once')
+        return
+
     if translation:
         queue.put(translation)
         # logging if needed
@@ -77,7 +85,8 @@ def translate_audio(translation_queue):
             with open(APP_AUDIO_WAV_PATH, 'w+b') as f:
                 f.write(wav_data.read())
 
-            # translate japanese voice-chat to english and push to translation queue in thread
+            # translate japanese audio to english and push to translation queue in thread
+            # TODO: Add a Mutex to ensure request is not to Whisper simultaneously??
             Thread(target=request_thread, args=[translation_queue, prev_phrase_time, now], daemon=True).start()
 
         else:

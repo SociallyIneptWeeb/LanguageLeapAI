@@ -79,13 +79,12 @@ Setting up **LanguageLeapAI** requires 3 crucial steps, so don't miss out on any
 
 ## Usage
 
-To run **LanguageLeapAI**, you need to first run WhisperAI and Voicevox.
-
-For this project, Voicevox can only be run in a docker container. However, WhisperAI can either be run via Docker or using Google Colab.
+To run **LanguageLeapAI**, you need to first run WhisperAI and Voicevox. They can either be run via Docker or using Google Colab.
 
 ### Google Colab
 
 If your GPU is not powerful enough, you may want to consider running WhisperAI and Voicevox using Google Colab's GPU.
+
 Upload [run_whisper_colab.ipynb](src/run_whisper_colab.ipynb) and [run_voicevox_colab.ipynb](src/run_voicevox_colab.ipynb) files to Google drive, open the notebook with Google Colab and simply follow the instructions!
 
 ### Docker
@@ -114,6 +113,37 @@ To run the Voice Translator:
 ```python voice_translate.py```
 
 To stop the python scripts, simply press `Ctrl+C` in the terminal.
+
+
+### Things to note
+
+Some important things to keep in mind while using **LanguageLeapAI**.
+
+#### Whisper's inconsistency
+
+Do note that WhisperAI is not exactly the most accurate and will not transcribe speech correctly 100% of the time, so use at your own risk.
+Until OpenAI decides to improve the dataset that was used to train the Whisper models, this will have to do.
+
+Also, Whisper is not designed to handle multiple concurrent requests at once.
+However, for subtitles to be updated in time, multiple requests are being sent asynchronously, so some requests might return an error.
+
+#### Antivirus Web Protection
+
+If you are running Whisper and Voicevox on the cloud using Google Colab, since we are using ngrok and localtunnel to host our services,
+the randomised public IP address that they provide might be blacklisted by your antivirus software. If the AI seems to stop working,
+it may be due to your antivirus blocking the connections to these public IP addresses. 
+You may whitelist these IP addresses or just turn off your antivirus web protection **at your own risk**.
+
+#### Voicevox voices
+
+There are certain terms and conditions for using the voices from Voicevox, so do read up on [these](https://voicevox.hiroshiba.jp/) before using a specific speaker.
+
+
+#### Application limitations
+
+Some applications like Valorant for some reason does not allow open mic for team voice chat, so **LanguageLeapAI** will not work for in these cases,
+unless you hold down the push to talk button whenever you want your teammates to hear the Text-to-Speech.
+However, Valorant does have open mic for party voice-chat, so there should be no issue if it's used towards your party members.
 
 ## License
 

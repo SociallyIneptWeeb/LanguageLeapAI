@@ -57,4 +57,5 @@ def speak_jp(sentence):
 
 if __name__ == '__main__':
     # test if voicevox is up and running
-    speak_jp('皆さん、ビデオに「いいね！」を残して、私のチャンネルを購読するのを忘れないでください。')
+    print('Voicevox attempting to speak now...')
+    speak_jp('むかしあるところに、ジャックという男の子がいました。ジャックはお母さんと一緒に住んでいました。')
