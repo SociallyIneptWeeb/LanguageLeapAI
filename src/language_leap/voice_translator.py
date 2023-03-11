@@ -1,5 +1,5 @@
 import wave
-from os import getenv
+from pathlib import Path
 from time import sleep
 
 import deepl
@@ -15,7 +15,7 @@ from language_leap.environment import (DEEPL_AUTH_KEY, LOGGING, MIC_ID,
 
 logger = getLogger(__name__)
 
-MIC_AUDIO_PATH = r'audio/mic.wav'
+MIC_AUDIO_PATH = Path(__file__).resolve() / 'audio/mic.wav'
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
 
