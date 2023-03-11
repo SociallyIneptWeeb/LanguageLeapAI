@@ -45,6 +45,11 @@ def on_release_key(_):
     stream.close()
     stream = None
 
+    # if empty audio file
+    if not frames:
+        print('No audio file to transcribe detected.')
+        return
+
     # write microphone audio to file
     wf = wave.open(MIC_AUDIO_PATH, 'wb')
     wf.setnchannels(MIC_CHANNELS)
@@ -57,7 +62,7 @@ def on_release_key(_):
     try:
         eng_speech = transcribe(MIC_AUDIO_PATH)
     except requests.exceptions.JSONDecodeError:
-        print('No audio file to transcribe detected.')
+        print('Too many requests to process at once')
         return
 
     if eng_speech:

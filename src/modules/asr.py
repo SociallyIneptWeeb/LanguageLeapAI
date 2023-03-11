@@ -13,9 +13,18 @@ SAMPLE_EN_FILEPATH = Path(__file__).resolve().parent.parent / r'audio\samples\en
 
 
 def transcribe(filepath):
-    with open(filepath, 'rb') as infile:
-        files = {'audio_file': infile}
-        r = requests.post(f'{BASE_URL}/asr?task=transcribe&language=en&output=json', files=files)
+    try:
+        with open(filepath, 'rb') as infile:
+            files = {'audio_file': infile}
+            r = requests.post(f'{BASE_URL}/asr?task=transcribe&language=en&output=json', files=files)
+
+    except requests.exceptions.Timeout:
+        print('Request timeout')
+        return None
+
+    except requests.exceptions.ConnectionError:
+        print('Unable to reach Whisper, ensure that it is running, or the WHISPER_BASE_URL variable is set correctly')
+        return None
 
     return r.json()['text'].strip()
 
@@ -29,6 +38,10 @@ def translate(filepath, language):
                               timeout=REQUEST_TIMEOUT)
     except requests.exceptions.Timeout:
         print('Request timeout')
+        return None
+
+    except requests.exceptions.ConnectionError:
+        print('Unable to reach Whisper, ensure that it is running, or the WHISPER_BASE_URL variable is set correctly')
         return None
 
     translation = r.json()['text'].strip()

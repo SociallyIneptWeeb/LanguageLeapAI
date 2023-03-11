@@ -35,6 +35,11 @@ def speak_jp(sentence):
     # generate initial query
     params_encoded = urlencode({'text': sentence, 'speaker': VOICE_ID})
     r = requests.post(f'{BASE_URL}/audio_query?{params_encoded}')
+
+    if r.status_code == 404:
+        print('Unable to reach Voicevox, ensure that it is running, or the VOICEVOX_BASE_URL variable is set correctly')
+        return
+
     voicevox_query = r.json()
     voicevox_query['speedScale'] = SPEED_SCALE
     voicevox_query['volumeScale'] = VOLUME_SCALE

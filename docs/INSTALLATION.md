@@ -4,9 +4,24 @@
 
 So you want to try out **LanguageLeapAI** huh? 
 Do note that running WhisperAI and Voicevox on your local machine is not recommended as a significant amount of RAM and GPU power is required for the program to run efficiently.
-If possible, you should run these 2 on another server either on your local network or on the cloud. 
+If possible, you should run these 2 on another server either on your local network or on the cloud.
+
+
+## Installing Dependencies
+
+### Cloning this repository
+
+Run this command to clone this entire repository.
+
+```git clone https://github.com/SociallyIneptWeeb/LanguageLeapAI```
+
+Run the following command in the root folder to install the required python dependencies.
+
+```pip install -r requirements.txt```
+
 
 ## Installing Services
+
 
 ### Docker
 
@@ -24,12 +39,5 @@ You can download and install Voicemeeter from their website [here](https://vb-au
 
 As the number of virtual cables provided by Voicemeeter Banana is not enough, we will also be installing an extra one [here](https://vb-audio.com/Cable/).
 Download and Install VB-CABLE Driver by extracting all files and Run Setup Program in administrator mode. Reboot after installation.
-
-
-## Installing Dependencies
-
-Run the following command in the root folder to install the required python dependencies.
-
-```pip install -r requirements.txt```
 
 After completing this step, you may move on to the next: Setting up [audio routing](AUDIO.md) using Voicemeeter Banana.

@@ -8,11 +8,11 @@ Follow the steps below to:
 ## System settings
 Change your default playback device. Go to Control Panel -> Hardware and Sound and under Sound, go to Change system sounds.
 
-![](screenshots\control_panel.png?raw=true)
+![](screenshots/control_panel.png?raw=true)
 
 Set VoiceMeeter Input as your default playback device.
 
-![](screenshots\default_playback.png?raw=true)
+![](screenshots/default_playback.png?raw=true)
 
 After doing this, you may not hear any audio from your system. This is intended, and we will be directing the system audio into your speakers/headphones in the next step.
 
@@ -21,7 +21,7 @@ After doing this, you may not hear any audio from your system. This is intended,
 Run Voicemeeter Banana. At the top right area where it says hardware out, click A1 and select your speakers/headphones. Wherever you want the desktop sounds to go, so you can hear them. 
 There is WDM, MME and KS. Generally speaking choose WDM because this has a lower latency than MME.
 
-![](screenshots\a1_hardware_out.png?raw=true)
+![](screenshots/a1_hardware_out.png?raw=true)
 
 
 To the left of Hardware Out section, there is the Virtual input section which shows Voicemeeter Banana's in-built virtual cables, VAIO and AUX.
@@ -29,7 +29,7 @@ Select A1 for the VAIO virtual cable. This VAIO cable represents VoiceMeeter Inp
 By selecting VoiceMeeter Input as your default playback device earlier, any desktop audio will be played into this cable.
 By selecting A1, you are sending your desktop audio via this cable into hardware out A1 (speakers/headphones). You should be able to hear your desktop audio now.
 
-![](screenshots\virtual_input_sect.png?raw=true)
+![](screenshots/virtual_input_sect.png?raw=true)
 
 We will be using the AUX cable for any application audio output that we want Whisper to translate. Select A1 so that we can hear the application audio as well in our speakers/headphones.
 Select B2 so that the application audio will be passed into VoiceMeeter Aux Output which will be recorded by [subtitler.py](../src/subtitler.py) and passed to Whisper.
