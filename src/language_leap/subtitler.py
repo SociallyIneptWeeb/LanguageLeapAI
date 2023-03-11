@@ -3,21 +3,12 @@ import sys
 import textwrap
 import threading
 import tkinter as tk
-from os import getenv
 from queue import Queue
 
-from dotenv import load_dotenv
-
-from modules.audio_translate import translate_audio
-
-load_dotenv()
-
-OFFSET_X = int(getenv('OFFSET_X'))
-OFFSET_Y = int(getenv('OFFSET_Y'))
-SUBTITLE_FONT_SIZE = int(getenv('SUBTITLE_FONT_SIZE'))
-SUBTITLE_COLOR = getenv('SUBTITLE_COLOR')
-SUBTITLE_BG_COLOR = getenv('SUBTITLE_BG_COLOR')
-SACRIFICIAL_COLOR = getenv('SACRIFICIAL_COLOR')
+from language_leap.audio_translate import translate_audio
+from language_leap.environment import (OFFSET_X, OFFSET_Y, SACRIFICIAL_COLOR,
+                                       SUBTITLE_BG_COLOR, SUBTITLE_COLOR,
+                                       SUBTITLE_FONT_SIZE)
 
 
 def subtitle_updater(root, queue, label):
@@ -54,7 +45,8 @@ def setup_overlay():
     # set tkinter gui to be topmost without window
     root = tk.Tk()
     root.overrideredirect(True)
-    root.geometry(f'{root.winfo_screenwidth()}x{root.winfo_screenheight()}+{OFFSET_X}+{OFFSET_Y}')
+    root.geometry(
+        f'{root.winfo_screenwidth()}x{root.winfo_screenheight()}+{OFFSET_X}+{OFFSET_Y}')
     root.lift()
     root.wm_attributes('-topmost', True)
     root.wm_attributes('-disabled', True)
@@ -83,7 +75,8 @@ def start_app():
     subtitle_queue = Queue()
 
     # thread to listen and translate audio
-    threading.Thread(target=translate_audio, args=[subtitle_queue], daemon=True).start()
+    threading.Thread(target=translate_audio, args=[
+                     subtitle_queue], daemon=True).start()
 
     # updates subtitles every 0.5s by checking queue
     subtitle_updater(overlay, subtitle_queue, subtitle)

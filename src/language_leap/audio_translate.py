@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from io import BytesIO
-from os import getenv
 from queue import Queue
 from threading import Thread
 from time import sleep
@@ -8,34 +7,43 @@ from time import sleep
 import requests
 import speech_recognition as sr
 
-from .asr import translate
+from language_leap.asr import translate
+from language_leap.environment import (APP_OUTPUT_ID, INPUT_LANGUAGE, LOGGING,
+                                       PHRASE_TIMEOUT, RECORD_TIMEOUT)
 
-APP_OUTPUT_ID = int(getenv('AUX_OUTPUT_ID'))
-RECORD_TIMEOUT = int(getenv('RECORD_TIMEOUT'))
-PHRASE_TIMEOUT = int(getenv('PHRASE_TIMEOUT'))
-INPUT_LANGUAGE = getenv('TARGET_LANGUAGE_CODE')
-LOGGING = getenv("LOGGING", 'False').lower() in ('true', '1', 't')
-APP_AUDIO_WAV_PATH = r'audio\app_audio.wav'
+APP_AUDIO_WAV_PATH = 'audio/app_audio.wav'
 
 
-def request_thread(queue, phrase_time, now):
+def request_thread(queue: Queue, phrase_time: datetime, now: datetime):
+    """
+    Thread to send audio to Whisper and push translation to queue
+
+    Parameters:
+        queue (Queue): Queue to push translation to
+        phrase_time (datetime): Time of last audio received
+        now (datetime): Time of current audio received
+    """
     try:
         translation = translate(APP_AUDIO_WAV_PATH, INPUT_LANGUAGE)
     except requests.exceptions.JSONDecodeError:
         # Whisper is not thread-safe, see https://github.com/openai/whisper/discussions/296
         # However, if we do not want a single request to block future audio, just catch the error
-        print('Too many requests to process at once')
+        logger.error('Too many requests to process at once')
         return
 
     if translation:
-        queue.put(translation)
-        # logging if needed
-        if LOGGING:
-            delay = (datetime.utcnow() - now).total_seconds()
-            if phrase_time:
-                print(f'Previous time: {phrase_time.time().strftime("%H:%M:%S")}, Now: {now.time().strftime("%H:%M:%S")}, Delay: {delay}, Translation: {translation}')
-            else:
-                print(f'Now: {now.time()}, Delay: {delay}, Translation: {translation}')
+        # Guard against empty translations
+        return
+
+    queue.put(translation)
+    # logging if needed
+    delay = (datetime.utcnow() - now).total_seconds()
+    logger.debug(
+        f'Previous time: {phrase_time.time().strftime("%H:%M:%S") if phrase_time else "Not Given"}, '
+        f'Now: {now.time().strftime("%H:%M:%S")}, '
+        f'Delay: {delay}, '
+        f'Translation: {translation}'
+    )
 
 
 def translate_audio(translation_queue):
@@ -55,7 +63,8 @@ def translate_audio(translation_queue):
         data_queue.put(raw_data)
 
     # Create a background thread that will pass us raw audio bytes.
-    recorder.listen_in_background(audio_output, record_callback, phrase_time_limit=RECORD_TIMEOUT)
+    recorder.listen_in_background(
+        audio_output, record_callback, phrase_time_limit=RECORD_TIMEOUT)
 
     # The last time a recording was retrieved from the queue.
     phrase_time = None
@@ -80,14 +89,16 @@ def translate_audio(translation_queue):
                 last_sample += data
 
             # Write audio data to the wav file as bytes.
-            audio_data = sr.AudioData(last_sample, audio_output.SAMPLE_RATE, audio_output.SAMPLE_WIDTH)
+            audio_data = sr.AudioData(
+                last_sample, audio_output.SAMPLE_RATE, audio_output.SAMPLE_WIDTH)
             wav_data = BytesIO(audio_data.get_wav_data())
             with open(APP_AUDIO_WAV_PATH, 'w+b') as f:
                 f.write(wav_data.read())
 
             # translate japanese audio to english and push to translation queue in thread
             # TODO: Add a Mutex to ensure request is not to Whisper simultaneously??
-            Thread(target=request_thread, args=[translation_queue, prev_phrase_time, now], daemon=True).start()
+            Thread(target=request_thread, args=[
+                   translation_queue, prev_phrase_time, now], daemon=True).start()
 
         else:
             # Infinite loops are bad for processors, must sleep.
