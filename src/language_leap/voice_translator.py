@@ -3,6 +3,7 @@ from os import getenv
 from time import sleep
 
 import deepl
+import googletrans
 import keyboard
 import pyaudio
 import requests
@@ -55,13 +56,18 @@ def on_release_key(_):
         return
 
     if eng_speech:
-        jp_speech = translator.translate_text(
-            eng_speech,
-            target_lang=TARGET_LANGUAGE
-        )
-        logger.debug(f'English: {eng_speech}')
-        logger.debug(f'Japanese: {jp_speech}')
+
+        if USE_DEEPL:
+            jp_speech = translator.translate_text(eng_speech, target_lang=TARGET_LANGUAGE)
+        else:
+            jp_speech = translator.translate(eng_speech, dest=TARGET_LANGUAGE).text
+
+        if LOGGING:
+            print(f'English: {eng_speech}')
+            print(f'Japanese: {jp_speech}')
+
         speak(jp_speech, TARGET_LANGUAGE)
+
     else:
         logger.error('No speech detected.')
 
@@ -77,7 +83,13 @@ if __name__ == '__main__':
     frames = []
     recording = False
     stream = None
-    translator = deepl.Translator(DEEPL_AUTH_KEY)
+
+    # Set DeepL or Google Translator
+    if USE_DEEPL:
+        translator = deepl.Translator(DEEPL_AUTH_KEY)
+    else:
+        translator = googletrans.Translator()
+
     keyboard.on_press_key(RECORD_KEY, on_press_key)
     keyboard.on_release_key(RECORD_KEY, on_release_key)
 

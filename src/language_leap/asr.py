@@ -28,7 +28,7 @@ def _request_text(file_path: Path, language: str = 'en') -> Optional[str]:
     Returns:
         Optional[str]: Transcribed text or None if request timed out.
     """
-    # TODO: This function replace 'transcribe' and 'translate' functions.
+    # TODO: This function can replace 'transcribe' and 'translate' functions.
 
     with file_path.open('rb') as infile:
         try:

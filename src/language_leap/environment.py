@@ -28,3 +28,6 @@ DEEPL_AUTH_KEY = getenv('DEEPL_AUTH_KEY')
 TARGET_LANGUAGE = getenv('TARGET_LANGUAGE_CODE')
 MIC_ID = int(getenv('MICROPHONE_ID'))
 RECORD_KEY = getenv('MIC_RECORD_KEY')
+
+
+USE_DEEPL = getenv('USE_DEEPL', 'False').lower() in ('true', '1', 't')
