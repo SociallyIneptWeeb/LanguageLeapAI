@@ -3,6 +3,7 @@ from os import getenv
 from time import sleep
 
 import deepl
+import googletrans
 import keyboard
 import pyaudio
 import requests
@@ -13,11 +14,12 @@ from modules.tts import speak
 
 load_dotenv()
 
+USE_DEEPL = getenv('USE_DEEPL', 'False').lower() in ('true', '1', 't')
 DEEPL_AUTH_KEY = getenv('DEEPL_AUTH_KEY')
 TARGET_LANGUAGE = getenv('TARGET_LANGUAGE_CODE')
 MIC_ID = int(getenv('MICROPHONE_ID'))
 RECORD_KEY = getenv('MIC_RECORD_KEY')
-LOGGING = getenv("LOGGING", 'False').lower() in ('true', '1', 't')
+LOGGING = getenv('LOGGING', 'False').lower() in ('true', '1', 't')
 MIC_AUDIO_PATH = r'audio/mic.wav'
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
@@ -59,11 +61,18 @@ def on_release_key(_):
         return
 
     if eng_speech:
-        jp_speech = translator.translate_text(eng_speech, target_lang=TARGET_LANGUAGE)
+
+        if USE_DEEPL:
+            jp_speech = translator.translate_text(eng_speech, target_lang=TARGET_LANGUAGE)
+        else:
+            jp_speech = translator.translate(eng_speech, dest=TARGET_LANGUAGE).text
+
         if LOGGING:
             print(f'English: {eng_speech}')
             print(f'Japanese: {jp_speech}')
+
         speak(jp_speech, TARGET_LANGUAGE)
+
     else:
         print('No speech detected.')
 
@@ -79,7 +88,13 @@ if __name__ == '__main__':
     frames = []
     recording = False
     stream = None
-    translator = deepl.Translator(DEEPL_AUTH_KEY)
+
+    # Set DeepL or Google Translator
+    if USE_DEEPL:
+        translator = deepl.Translator(DEEPL_AUTH_KEY)
+    else:
+        translator = googletrans.Translator()
+
     keyboard.on_press_key(RECORD_KEY, on_press_key)
     keyboard.on_release_key(RECORD_KEY, on_release_key)
 
