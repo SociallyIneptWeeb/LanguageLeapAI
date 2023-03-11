@@ -1,5 +1,5 @@
 import wave
-from os import getenv
+from pathlib import Path
 from time import sleep
 
 import deepl
@@ -7,20 +7,15 @@ import googletrans
 import keyboard
 import pyaudio
 import requests
-from dotenv import load_dotenv
-
 from modules.asr import transcribe
 from modules.tts import speak
 
-load_dotenv()
+from language_leap.environment import (DEEPL_AUTH_KEY, LOGGING, MIC_ID,
+                                       RECORD_KEY, TARGET_LANGUAGE)
 
-USE_DEEPL = getenv('USE_DEEPL', 'False').lower() in ('true', '1', 't')
-DEEPL_AUTH_KEY = getenv('DEEPL_AUTH_KEY')
-TARGET_LANGUAGE = getenv('TARGET_LANGUAGE_CODE')
-MIC_ID = int(getenv('MICROPHONE_ID'))
-RECORD_KEY = getenv('MIC_RECORD_KEY')
-LOGGING = getenv('LOGGING', 'False').lower() in ('true', '1', 't')
-MIC_AUDIO_PATH = r'audio/mic.wav'
+logger = getLogger(__name__)
+
+MIC_AUDIO_PATH = Path(__file__).resolve() / 'audio/mic.wav'
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
 
@@ -57,7 +52,7 @@ def on_release_key(_):
     try:
         eng_speech = transcribe(MIC_AUDIO_PATH)
     except requests.exceptions.JSONDecodeError:
-        print('No audio file to transcribe detected.')
+        logger.error('No audio file to transcribe detected.')
         return
 
     if eng_speech:
@@ -74,7 +69,7 @@ def on_release_key(_):
         speak(jp_speech, TARGET_LANGUAGE)
 
     else:
-        print('No speech detected.')
+        logger.error('No speech detected.')
 
 
 if __name__ == '__main__':
@@ -107,4 +102,4 @@ if __name__ == '__main__':
                 sleep(0.5)
 
     except KeyboardInterrupt:
-        print('Closing voice translator.')
+        logger.info('Closing voice translator.')
