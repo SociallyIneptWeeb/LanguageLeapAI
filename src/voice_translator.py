@@ -66,7 +66,6 @@ def on_release_key(_):
         return
 
     if eng_speech:
-
         if USE_DEEPL:
             jp_speech = translator.translate_text(eng_speech, target_lang=TARGET_LANGUAGE)
         else:
@@ -77,7 +76,7 @@ def on_release_key(_):
             print(f'Japanese: {jp_speech}')
 
         speak(jp_speech, TARGET_LANGUAGE)
-
+        
     else:
         print('No speech detected.')
 
