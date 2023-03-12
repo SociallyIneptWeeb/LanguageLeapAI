@@ -7,6 +7,7 @@ import googletrans
 import keyboard
 import pyaudio
 import requests
+import romajitable
 from dotenv import load_dotenv
 
 from modules.asr import transcribe
@@ -20,6 +21,7 @@ TARGET_LANGUAGE = getenv('TARGET_LANGUAGE_CODE')
 MIC_ID = int(getenv('MICROPHONE_ID'))
 RECORD_KEY = getenv('MIC_RECORD_KEY')
 LOGGING = getenv('LOGGING', 'False').lower() in ('true', '1', 't')
+ENGLISH_TO_KATAKANA = getenv('ENGLISH_TO_KATAKANA', 'False').lower() in ('true', '1', 't')
 MIC_AUDIO_PATH = r'audio/mic.wav'
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
@@ -67,7 +69,10 @@ def on_release_key(_):
 
     if eng_speech:
 
-        if USE_DEEPL:
+        if ENGLISH_TO_KATAKANA:
+            jp_speech = romajitable.to_kana(eng_speech).katakana
+        #I cant remember if it checks the first condition and ignores the others but eh, better safe than sorry - catto
+        if USE_DEEPL and not ENGLISH_TO_KATAKANA:
             jp_speech = translator.translate_text(eng_speech, target_lang=TARGET_LANGUAGE)
         else:
             jp_speech = translator.translate(eng_speech, dest=TARGET_LANGUAGE).text
@@ -97,6 +102,7 @@ if __name__ == '__main__':
     # Set DeepL or Google Translator
     if USE_DEEPL:
         translator = deepl.Translator(DEEPL_AUTH_KEY)
+    
     else:
         translator = googletrans.Translator()
 
