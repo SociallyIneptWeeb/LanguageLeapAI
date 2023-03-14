@@ -6,6 +6,10 @@ LEAP across Language barriers by using AI to converse with other online users fr
 **LanguageLeapAI** aims to provide you a real-time language AI assistant that can understand and speak your desired language fluently. 
 *(Targeted towards English to Japanese as of right now)*
 
+Setup Guide: https://www.youtube.com/watch?v=bN5UaEkIPGM
+
+Showcase: https://www.youtube.com/watch?v=UY7sRB60wZ4
+
 
 ## Integration of AI Entities
 
