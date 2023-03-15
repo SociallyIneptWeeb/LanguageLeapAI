@@ -93,6 +93,12 @@ Upload [run_whisper_colab.ipynb](src/run_whisper_colab.ipynb) and [run_voicevox_
 
 if you using google colab don't forget to add 
 
+```function ConnectButton(){
+  console.log("Connect pushed");
+  document.querySelector("#top-toolbar > colab-connectbutton").shadowRoot.querySelector("#connect").click()
+}
+setInterval(ConnectButton,60000);```
+
 ```function KeepClicking(){
    console.log("Clicking");
    document.querySelector("colab-toolbar-button#connect").click()
