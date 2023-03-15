@@ -97,7 +97,9 @@ if you using google colab don't forget to add
   console.log("Connect pushed");
   document.querySelector("#top-toolbar > colab-connectbutton").shadowRoot.querySelector("#connect").click()
 }
-setInterval(ConnectButton,60000);```
+setInterval(ConnectButton,60000);
+```
+and
 
 ```function KeepClicking(){
    console.log("Clicking");
