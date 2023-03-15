@@ -91,6 +91,15 @@ If your GPU is not powerful enough, you may want to consider running WhisperAI a
 
 Upload [run_whisper_colab.ipynb](src/run_whisper_colab.ipynb) and [run_voicevox_colab.ipynb](src/run_voicevox_colab.ipynb) files to Google drive, open the notebook with Google Colab and simply follow the instructions!
 
+if you using google colab don't forget to add 
+
+```function KeepClicking(){
+   console.log("Clicking");
+   document.querySelector("colab-toolbar-button#connect").click()
+}setInterval(KeepClicking,60000)
+```
+paste to console inspect
+
 ### Docker
 
 If you still want to run both Whisper and Voicevox on your computer, run these commands in the root folder containing the [docker-compose.yml](docker-compose.yml) file.
