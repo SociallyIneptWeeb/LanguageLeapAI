@@ -71,6 +71,20 @@ def speak_jp(sentence):
     [t.join() for t in threads]
 
 
+def speak_de(sentence):
+    # generate initial query
+    params = {'text': sentence}
+    r = requests.get('http://localhost:5002/api/tts', params=params)
+
+    with open(VOICEVOX_WAV_PATH, 'wb') as outfile:
+        outfile.write(r.content)
+
+    # play voice to app mic input and speakers/headphones
+    threads = [Thread(target=play_voice, args=[APP_INPUT_ID]), Thread(target=play_voice, args=[SPEAKERS_INPUT_ID])]
+    [t.start() for t in threads]
+    [t.join() for t in threads]
+
+
 if __name__ == '__main__':
     # test if voicevox is up and running
     print('Voicevox attempting to speak now...')

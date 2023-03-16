@@ -21,7 +21,7 @@ recognition.
 3. [Voicevox](https://voicevox.hiroshiba.jp/): Japanese Deep-Learning AI Voice Synthesizer
 
 
-WhisperAI and Voicevox both have docker images available on DockerHub, so we will be building and running them both via a [Docker Compose file](docker-compose.yml).
+WhisperAI and Voicevox both have docker images available on DockerHub, so we will be building and running them both via a [Docker Compose file](Docker Enviroments/jp/docker-compose.yml).
 DeepL can be interacted with by signing up for a free plan and interacting with its [REST API](https://www.deepl.com/pro-api?cta=header-pro-api/) up to 500,000 character limit / month
 
 ![](docs/screenshots/ai_integrations.png?raw=true)
@@ -93,7 +93,9 @@ Upload [run_whisper_colab.ipynb](src/run_whisper_colab.ipynb) and [run_voicevox_
 
 ### Docker
 
-If you still want to run both Whisper and Voicevox on your computer, run these commands in the root folder containing the [docker-compose.yml](docker-compose.yml) file.
+#### Voicevox - JP
+
+If you still want to run both Whisper and Voicevox on your computer, run these commands in the folder containing the [docker-compose.yml](Docker Enviroments/jp/docker-compose.yml) file.
 
 To run both WhisperAI and Voicevox:
 
@@ -103,6 +105,17 @@ To stop running the containers:
 
 ```docker-compose down```
 
+#### TTS Thorsten - DE
+
+If you want to run a German version of Voicevox, you need to change the docker-compose file to the [corresponding one](Docker Enviroments/de/docker-compose.yml). The TTS is the only thing that's changing, so make sure to also change the `TARGET_LANGUAGE` in the [.env](./.env.sample) file.
+
+To run both WhisperAI and Thorsten:
+
+```docker-compose up -d```
+
+To stop running the containers:
+
+```docker-compose down```
 
 ### Python Program
 

@@ -68,15 +68,15 @@ def on_release_key(_):
     if eng_speech:
 
         if USE_DEEPL:
-            jp_speech = translator.translate_text(eng_speech, target_lang=TARGET_LANGUAGE)
+            final_speech = translator.translate_text(eng_speech, target_lang=TARGET_LANGUAGE)
         else:
-            jp_speech = translator.translate(eng_speech, dest=TARGET_LANGUAGE).text
+            final_speech = translator.translate(eng_speech, dest=TARGET_LANGUAGE).text
 
         if LOGGING:
             print(f'English: {eng_speech}')
-            print(f'Japanese: {jp_speech}')
+            print(f'Translated: {final_speech}')
 
-        speak(jp_speech, TARGET_LANGUAGE)
+        speak(final_speech, TARGET_LANGUAGE)
 
     else:
         print('No speech detected.')

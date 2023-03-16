@@ -16,10 +16,10 @@ services:
               count: all
               capabilities: [gpu]
 
-  voicevox:
-    image: voicevox/voicevox_engine:nvidia-ubuntu20.04-latest
+  thorsten:
+    image: ghcr.io/coqui-ai/tts
     ports:
-      - "50021:50021"
+      - "50021:5002"
     deploy:
       resources:
         reservations:
@@ -27,3 +27,5 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+    entrypoint: "/bin/bash"
+    command: "python3 TTS/server/server.py --model_name tts_models/de/thorsten/vits --use_cuda true"
