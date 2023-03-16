@@ -19,7 +19,7 @@ services:
   voicevox:
     image: voicevox/voicevox_engine:nvidia-ubuntu20.04-latest
     ports:
-      - "5002:50021"
+      - "50021:50021"
     deploy:
       resources:
         reservations:
