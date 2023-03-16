@@ -74,7 +74,7 @@ def speak_jp(sentence):
 def speak_de(sentence):
     # generate initial query
     params = {'text': sentence}
-    r = requests.get('http://localhost:5002/api/tts', params=params)
+    r = requests.get('http://localhost:50021/api/tts', params=params)
 
     with open(VOICEVOX_WAV_PATH, 'wb') as outfile:
         outfile.write(r.content)
