@@ -13,19 +13,19 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              count: all
+              count: 1
               capabilities: [gpu]
 
   thorsten:
     image: ghcr.io/coqui-ai/tts
     ports:
       - "50021:5002"
+    entrypoint: "python3"
+    command: "TTS/server/server.py --model_name tts_models/de/thorsten/vits"
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
-              count: all
+              count: 1
               capabilities: [gpu]
-    entrypoint: "/bin/bash"
-    command: "python3 TTS/server/server.py --model_name tts_models/de/thorsten/vits --use_cuda true"
