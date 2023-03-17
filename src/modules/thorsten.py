@@ -4,14 +4,14 @@ from threading import Thread
 
 import requests
 from dotenv import load_dotenv
-
+from modules.util import *
 from modules.audio_to_device import play_voice
 
 load_dotenv()
 
 # Audio devices
-SPEAKERS_INPUT_ID = int(getenv('VOICEMEETER_INPUT_ID'))
-APP_INPUT_ID = int(getenv('CABLE_INPUT_ID'))
+SPEAKERS_INPUT_ID = castInt(getenv('VOICEMEETER_INPUT_ID'))
+APP_INPUT_ID = castInt(getenv('CABLE_INPUT_ID'))
 
 
 # Voicevox settings

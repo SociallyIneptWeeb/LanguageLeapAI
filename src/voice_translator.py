@@ -69,11 +69,11 @@ def on_release_key(_):
     if source_speech:
 
         translator.set_text(source_speech)
-        jp_speech = translator.translate()
+        translated_speech = translator.translate()
         
         if LOGGING:
             print(f'SOURCE: {source_speech}')
-            print(f'Japanese: {jp_speech}')
+            print(f'TARGET: {translated_speech}')
 
         speak(translated_speech, TARGET_LANGUAGE)
 
