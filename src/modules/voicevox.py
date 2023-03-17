@@ -4,11 +4,8 @@ from threading import Thread
 from urllib.parse import urlencode
 
 import requests
-import sounddevice as sd
-import soundfile as sf
 from dotenv import load_dotenv
-import keyboard
-from .util import *
+from modules.audio_to_device import play_voice
 
 load_dotenv()
 
@@ -16,40 +13,16 @@ load_dotenv()
 SPEAKERS_INPUT_ID = castInt(getenv('VOICEMEETER_INPUT_ID'))
 APP_INPUT_ID = castInt(getenv('CABLE_INPUT_ID'))
 
-# Keyboard
-INGAME_PUSH_TO_TALK_KEY = getenv('INGAME_PUSH_TO_TALK_KEY')
-
 # Voicevox settings
 BASE_URL = getenv('VOICEVOX_BASE_URL')
-VOICE_ID = castInt(getenv('VOICE_ID'))
-SPEED_SCALE = castFloat(getenv('SPEED_SCALE'))
-VOLUME_SCALE = castFloat(getenv('VOLUME_SCALE'))
-INTONATION_SCALE = castFloat(getenv('INTONATION_SCALE'))
-PRE_PHONEME_LENGTH = castFloat(getenv('PRE_PHONEME_LENGTH'))
-POST_PHONEME_LENGTH = castFloat(getenv('POST_PHONEME_LENGTH'))
-VOICEVOX_WAV_PATH = Path(__file__).resolve().parent.parent / r'audio\voicevox.wav'
+VOICE_ID = int(getenv('VOICE_ID'))
+SPEED_SCALE = float(getenv('SPEED_SCALE'))
+VOLUME_SCALE = float(getenv('VOLUME_SCALE'))
+INTONATION_SCALE = float(getenv('INTONATION_SCALE'))
+PRE_PHONEME_LENGTH = float(getenv('PRE_PHONEME_LENGTH'))
+POST_PHONEME_LENGTH = float(getenv('POST_PHONEME_LENGTH'))
 
-
-def play_voice(device_id):
-    
-
-    if INGAME_PUSH_TO_TALK_KEY:
-        keyboard.press(INGAME_PUSH_TO_TALK_KEY)
-    try:    
-        data, fs = sf.read(VOICEVOX_WAV_PATH, dtype='float32')
-        #in case someone don't use VoiceMeeter and want to skip    
-        if device_id:
-            sd.play(data, fs, device=device_id)
-            sd.wait()
-        else:
-            print("your device id is not set")
-    except sd.PortAudioError as e:
-        print("Please check your device ID ,Error occurred while opening output stream: ", e)
-    except Exception as e:
-        print("Error occurred while playing sound: ", e)
-
-    if INGAME_PUSH_TO_TALK_KEY:
-        keyboard.release(INGAME_PUSH_TO_TALK_KEY)
+TTS_WAV_PATH = Path(__file__).resolve().parent.parent / r'audio\tts.wav'
 
 
 def speak_jp(sentence):
@@ -72,7 +45,7 @@ def speak_jp(sentence):
     params_encoded = urlencode({'speaker': VOICE_ID})
     r = requests.post(f'{BASE_URL}/synthesis?{params_encoded}', json=voicevox_query)
 
-    with open(VOICEVOX_WAV_PATH, 'wb') as outfile:
+    with open(TTS_WAV_PATH, 'wb') as outfile:
         outfile.write(r.content)
 
     # play voice to app mic input and speakers/headphones

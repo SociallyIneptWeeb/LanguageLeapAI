@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  whisper:
+    image: onerahmet/openai-whisper-asr-webservice:latest-gpu
+    environment:
+      ASR_MODEL: small
+    ports:
+      - "9000:9000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  thorsten:
+    image: ghcr.io/coqui-ai/tts
+    ports:
+      - "50021:5002"
+    entrypoint: "python3"
+    command: "TTS/server/server.py --model_name tts_models/de/thorsten/vits"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
