@@ -1,0 +1,2 @@
+start start_subtitler.bat
+start start_voice_translator.bat
