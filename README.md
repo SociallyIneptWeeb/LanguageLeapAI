@@ -92,7 +92,10 @@ To run **LanguageLeapAI**, you need to first run WhisperAI and Voicevox. They ca
 
 If your GPU is not powerful enough, you may want to consider running WhisperAI and Voicevox using Google Colab's GPU.
 
-Upload [run_whisper_colab.ipynb](src/run_whisper_colab.ipynb) and [run_voicevox_colab.ipynb](src/run_voicevox_colab.ipynb) files to Google drive, open the notebook with Google Colab and simply follow the instructions!
+Upload [run_whisper_n_voicevox.ipynb](src/run_whisper_n_voicevox.ipynb) file to Google drive, open the notebook with Google Colab and simply follow the instructions!
+
+To run only whisper or voicevox on the cloud:
+Use either the [run_whisper_colab.ipynb](src/run_whisper_colab.ipynb) and [run_voicevox_colab.ipynb](src/run_voicevox_colab.ipynb) Colab files instead!
 
 ### Docker
 
