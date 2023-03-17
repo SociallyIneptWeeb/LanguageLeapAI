@@ -95,7 +95,7 @@ Upload [run_whisper_colab.ipynb](src/run_whisper_colab.ipynb) and [run_voicevox_
 
 #### Voicevox - JA
 
-If you still want to run both Whisper and Voicevox on your computer, run these commands in the folder containing the [docker-compose.yml](Docker Enviroments/jp/docker-compose.yml) file.
+If you still want to run both Whisper and Voicevox on your computer, run these commands in the folder containing the [docker-compose.yml](docker-compose.yml) file.
 
 To run both WhisperAI and Voicevox:
 
@@ -107,11 +107,11 @@ To stop running the containers:
 
 #### TTS Thorsten - DE
 
-If you want to run a German version of Voicevox, you need to change the docker-compose file to the corresponding [one](Docker Enviroments/de/docker-compose.yml). The TTS is the only thing that's changing, so make sure to also change the `TARGET_LANGUAGE` in the [.env](./.env.sample) file.
+If you want to run a German version of Voicevox, you need to change the docker-compose file to the corresponding [one](docker-compose-de.yml). The TTS is the only thing that's changing, so make sure to also change the `TARGET_LANGUAGE_CODE` in your [.env](./.env.sample) file.
 
 To run both WhisperAI and Thorsten:
 
-```docker-compose up -d```
+```docker-compose -f docker-compose-de.yml up -d```
 
 To stop running the containers:
 

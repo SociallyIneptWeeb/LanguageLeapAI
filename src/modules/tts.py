@@ -1,4 +1,5 @@
-from .voicevox import speak_jp, speak_de
+from .thorsten import speak_de
+from .voicevox import speak_jp
 
 
 # Text-to-Speech, feel free to add your own function or add more languages
@@ -31,4 +32,3 @@ def speak(sentence, language_code):
     # German
     elif language_code == 'de':
         speak_de(sentence)
-        pass
