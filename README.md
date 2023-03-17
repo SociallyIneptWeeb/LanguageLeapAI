@@ -4,7 +4,7 @@
 
 LEAP across Language barriers by using AI to converse with other online users from across the globe!
 **LanguageLeapAI** aims to provide you a real-time language AI assistant that can understand and speak your desired language fluently. 
-*(Targeted towards English to Japanese as of right now)*
+*(Targeted towards English to Japanese and German as of right now)*
 
 Setup Guide: https://www.youtube.com/watch?v=bN5UaEkIPGM
 
@@ -21,8 +21,9 @@ recognition.
 3. [Voicevox](https://voicevox.hiroshiba.jp/): Japanese Deep-Learning AI Voice Synthesizer
 
 
-WhisperAI and Voicevox both have docker images available on DockerHub, so we will be building and running them both via a [Docker Compose file](Docker Enviroments/jp/docker-compose.yml).
-DeepL can be interacted with by signing up for a free plan and interacting with its [REST API](https://www.deepl.com/pro-api?cta=header-pro-api/) up to 500,000 character limit / month
+WhisperAI and Voicevox both have docker images available on DockerHub, so we will be building and running them both via a [Docker Compose file](docker-compose.yml).
+DeepL can be interacted with by signing up for a free plan and interacting with its [REST API](https://www.deepl.com/pro-api?cta=header-pro-api/) up to 500,000 character limit / month.
+If DeepL is unavailable in your country, an option to use Google Translate instead is available.
 
 ![](docs/screenshots/ai_integrations.png?raw=true)
 
@@ -42,6 +43,8 @@ This file is then played to your target application's microphone input and your 
 
 Since Voicevox only takes in Japanese text as input and generates speech in Japanese, the project is technically only limited to Japanese as the target language.
 However, Voicevox can be replaced with any other text to speech program that can speak your desired language for limitless possibilities.
+
+Thorsten has been added as a German TTS program.
 
 
 ### Audio Subtitler
@@ -155,12 +158,6 @@ You may whitelist these IP addresses or just turn off your antivirus web protect
 
 There are certain terms and conditions for using the voices from Voicevox, so do read up on [these](https://voicevox.hiroshiba.jp/) before using a specific speaker.
 
-
-#### Application limitations
-
-Some applications like Valorant for some reason does not allow open mic for team voice chat, so **LanguageLeapAI** will not work for in these cases,
-unless you hold down the push to talk button whenever you want your teammates to hear the Text-to-Speech.
-However, Valorant does have open mic for party voice-chat, so there should be no issue if it's used towards your party members.
 
 ## License
 
