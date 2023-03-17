@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_URL = getenv('WHISPER_BASE_URL')
+SOURCE_LANGUAGE_CODE = getenv('SOURCE_LANGUAGE_CODE')
 REQUEST_TIMEOUT = int(getenv('REQUEST_TIMEOUT'))
 SAMPLE_JP_FILEPATH = Path(__file__).resolve().parent.parent / r'audio\samples\japanese_speech_sample.wav'
 SAMPLE_EN_FILEPATH = Path(__file__).resolve().parent.parent / r'audio\samples\english_speech_sample.wav'
@@ -16,7 +17,7 @@ def transcribe(filepath):
     try:
         with open(filepath, 'rb') as infile:
             files = {'audio_file': infile}
-            r = requests.post(f'{BASE_URL}/asr?task=transcribe&language=en&output=json', files=files)
+            r = requests.post(f'{BASE_URL}/asr?task=transcribe&language={SOURCE_LANGUAGE_CODE}&output=json', files=files)
 
     except requests.exceptions.Timeout:
         print('Request timeout')

@@ -12,12 +12,12 @@ from dotenv import load_dotenv
 
 from modules.asr import transcribe
 from modules.tts import speak
+from modules.translator import Translator
 
 load_dotenv()
 
-USE_DEEPL = getenv('USE_DEEPL', 'False').lower() in ('true', '1', 't')
-DEEPL_AUTH_KEY = getenv('DEEPL_AUTH_KEY')
 TARGET_LANGUAGE = getenv('TARGET_LANGUAGE_CODE')
+SOURCE_LANGUAGE = getenv('SOURCE_LANGUAGE_CODE')
 MIC_ID = int(getenv('MICROPHONE_ID'))
 RECORD_KEY = getenv('MIC_RECORD_KEY')
 LOGGING = getenv('LOGGING', 'False').lower() in ('true', '1', 't')
@@ -61,21 +61,19 @@ def on_release_key(_):
 
     # transcribe audio
     try:
-        eng_speech = transcribe(MIC_AUDIO_PATH)
+        source_speech = transcribe(MIC_AUDIO_PATH)
     except requests.exceptions.JSONDecodeError:
         print('Too many requests to process at once')
         return
 
-    if eng_speech:
+    if source_speech:
 
-        if USE_DEEPL:
-            translated_speech = translator.translate_text(eng_speech, target_lang=TARGET_LANGUAGE)
-        else:
-            translated_speech = translator.translate(eng_speech, dest=TARGET_LANGUAGE).text
-
+        translator.set_text(source_speech)
+        translated_speech = translator.translate()
+        
         if LOGGING:
-            print(f'English: {eng_speech}')
-            print(f'Translated: {translated_speech}')
+            print(f'SOURCE: {source_speech}')
+            print(f'TARGET: {translated_speech}')
 
         speak(translated_speech, TARGET_LANGUAGE)
 
@@ -95,11 +93,8 @@ if __name__ == '__main__':
     recording = False
     stream = None
 
-    # Set DeepL or Google Translator
-    if USE_DEEPL:
-        translator = deepl.Translator(DEEPL_AUTH_KEY)
-    else:
-        translator = googletrans.Translator()
+    # Init Translator
+    translator = Translator(source=SOURCE_LANGUAGE, target=TARGET_LANGUAGE)
 
     keyboard.on_press_key(RECORD_KEY, on_press_key)
     keyboard.on_release_key(RECORD_KEY, on_release_key)

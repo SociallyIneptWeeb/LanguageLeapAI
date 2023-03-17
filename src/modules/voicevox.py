@@ -5,23 +5,22 @@ from urllib.parse import urlencode
 
 import requests
 from dotenv import load_dotenv
-
 from modules.audio_to_device import play_voice
-
+from modules.util import *
 load_dotenv()
 
 # Audio devices
-SPEAKERS_INPUT_ID = int(getenv('VOICEMEETER_INPUT_ID'))
-APP_INPUT_ID = int(getenv('CABLE_INPUT_ID'))
+SPEAKERS_INPUT_ID = castInt(getenv('VOICEMEETER_INPUT_ID'))
+APP_INPUT_ID = castInt(getenv('CABLE_INPUT_ID'))
 
 # Voicevox settings
 BASE_URL = getenv('VOICEVOX_BASE_URL')
-VOICE_ID = int(getenv('VOICE_ID'))
-SPEED_SCALE = float(getenv('SPEED_SCALE'))
-VOLUME_SCALE = float(getenv('VOLUME_SCALE'))
-INTONATION_SCALE = float(getenv('INTONATION_SCALE'))
-PRE_PHONEME_LENGTH = float(getenv('PRE_PHONEME_LENGTH'))
-POST_PHONEME_LENGTH = float(getenv('POST_PHONEME_LENGTH'))
+VOICE_ID = castInt(getenv('VOICE_ID'))
+SPEED_SCALE = castFloat(getenv('SPEED_SCALE'))
+VOLUME_SCALE = castFloat(getenv('VOLUME_SCALE'))
+INTONATION_SCALE = castFloat(getenv('INTONATION_SCALE'))
+PRE_PHONEME_LENGTH = castFloat(getenv('PRE_PHONEME_LENGTH'))
+POST_PHONEME_LENGTH = castFloat(getenv('POST_PHONEME_LENGTH'))
 
 TTS_WAV_PATH = Path(__file__).resolve().parent.parent / r'audio\tts.wav'
 
