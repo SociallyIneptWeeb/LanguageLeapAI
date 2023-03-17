@@ -108,6 +108,10 @@ To stop running the containers:
 
 ```docker-compose down```
 
+If you're running Windows Subsystem for Linux (WSL) don't forget to shut it down to reclaim your ram. This should only after you have stopped the containers and are done using the program.
+
+```wsl --shutdown```
+
 #### TTS Thorsten - DE
 
 If you want to run a German version of Voicevox, you need to change the docker-compose file to the corresponding [one](docker-compose-de.yml). The TTS is the only thing that's changing, so make sure to also change the `TARGET_LANGUAGE_CODE` in your [.env](./.env.sample) file.
