@@ -9,7 +9,7 @@ from time import sleep
 import requests
 import speech_recognition as sr
 
-from .asr import translate
+from .asr import speech_to_text
 
 APP_OUTPUT_ID = int(getenv('AUX_OUTPUT_ID'))
 RECORD_TIMEOUT = int(getenv('RECORD_TIMEOUT'))
@@ -21,7 +21,7 @@ APP_AUDIO_WAV_PATH = Path(__file__).resolve().parent.parent / r'audio\app_audio.
 
 def request_thread(queue, phrase_time, now):
     try:
-        translation = translate(APP_AUDIO_WAV_PATH, INPUT_LANGUAGE)
+        translation = speech_to_text(APP_AUDIO_WAV_PATH, 'translate', INPUT_LANGUAGE)
     except requests.exceptions.JSONDecodeError:
         # Whisper is not thread-safe, see https://github.com/openai/whisper/discussions/296
         # However, if we do not want a single request to block future audio, just catch the error

@@ -10,7 +10,7 @@ import pyaudio
 import requests
 from dotenv import load_dotenv
 
-from modules.asr import transcribe
+from modules.asr import speech_to_text
 from modules.tts import speak
 
 load_dotenv()
@@ -61,7 +61,7 @@ def on_release_key(_):
 
     # transcribe audio
     try:
-        eng_speech = transcribe(MIC_AUDIO_PATH)
+        eng_speech = speech_to_text(MIC_AUDIO_PATH, 'transcribe', 'en')
     except requests.exceptions.JSONDecodeError:
         print('Too many requests to process at once')
         return
