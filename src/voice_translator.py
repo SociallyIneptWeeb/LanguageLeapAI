@@ -18,6 +18,7 @@ load_dotenv()
 USE_DEEPL = getenv('USE_DEEPL', 'False').lower() in ('true', '1', 't')
 DEEPL_AUTH_KEY = getenv('DEEPL_AUTH_KEY')
 TARGET_LANGUAGE = getenv('TARGET_LANGUAGE_CODE')
+MAIN_LANGUAGE = getenv('MAIN_LANGUAGE_CODE')
 MIC_ID = int(getenv('MICROPHONE_ID'))
 RECORD_KEY = getenv('MIC_RECORD_KEY')
 LOGGING = getenv('LOGGING', 'False').lower() in ('true', '1', 't')
@@ -61,20 +62,20 @@ def on_release_key(_):
 
     # transcribe audio
     try:
-        eng_speech = speech_to_text(MIC_AUDIO_PATH, 'transcribe', 'en')
+        speech = speech_to_text(MIC_AUDIO_PATH, 'transcribe', MAIN_LANGUAGE)
     except requests.exceptions.JSONDecodeError:
         print('Too many requests to process at once')
         return
 
-    if eng_speech:
+    if speech:
 
         if USE_DEEPL:
-            translated_speech = translator.translate_text(eng_speech, target_lang=TARGET_LANGUAGE)
+            translated_speech = translator.translate_text(speech, target_lang=TARGET_LANGUAGE)
         else:
-            translated_speech = translator.translate(eng_speech, dest=TARGET_LANGUAGE).text
+            translated_speech = translator.translate(speech, dest=TARGET_LANGUAGE).text
 
         if LOGGING:
-            print(f'English: {eng_speech}')
+            print(f'Said: {speech}')
             print(f'Translated: {translated_speech}')
 
         speak(translated_speech, TARGET_LANGUAGE)
