@@ -6,6 +6,14 @@ First, copy [.env.sample](../.env.sample) to .env by running the following comma
 
 Now open .env in a text editor of your choice and update the variables. Below is a more detailed description of each environment variable
 
+## Language
+
+The MAIN_LANGUAGE is the language you speak in. By default, it is set to `en` because most of the users talk english and therefor want there subtitles to be in english. 
+But if you want to change the subtitles or want to speak your language instead of english you can do so by changing the value of MAIN_LANGUAGE to the corresponding one. (Check the [language code](https://www.andiamo.co.uk/resources/iso-language-codes/))
+Like this you can watch you're favorite K-Drama with your own subtitles.
+It may not work with every Language because Whisper is not trained for all languages. 
+Check [here](https://help.openai.com/en/articles/7031512-whisper-api-faq) and search for `What languages are supported?`.
+
 ## Logging 
 
 This variable can be set to either _True_ or _False_. Set to _True_ if you would like to see more detailed logging from the terminal when running the python scripts.
