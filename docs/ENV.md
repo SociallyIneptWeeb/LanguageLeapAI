@@ -10,6 +10,10 @@ Now open .env in a text editor of your choice and update the variables. Below is
 
 The MAIN_LANGUAGE is the language you speak in. By default, it is set to `en` because most of the users talk english and therefor want there subtitles to be in english. 
 But if you want to change the subtitles or want to speak your language instead of english you can do so by changing the value of MAIN_LANGUAGE to the corresponding one. (Check the [language code](https://www.andiamo.co.uk/resources/iso-language-codes/))
+
+Make sure to have the correct `TARGET_LANGUAGE` set to the correct input language. It helps Whisper recognize the language and transcibe it to text.
+By default it is set to `ja` and Whisper expects to get an japanese input and if it doesn't it'll get an error sometimes. 
+
 Like this you can watch you're favorite K-Drama with your own subtitles.
 It may not work with every Language because Whisper is not trained for all languages. 
 Check [here](https://help.openai.com/en/articles/7031512-whisper-api-faq) and search for `What languages are supported?`.
