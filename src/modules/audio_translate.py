@@ -11,7 +11,21 @@ import speech_recognition as sr
 
 from .asr import speech_to_text
 
-APP_OUTPUT_ID = int(getenv('AUX_OUTPUT_ID'))
+
+APP_OUTPUT_NAME = getenv('AUX_OUTPUT_NAME')
+def get_mic_index(starting_name):
+    for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
+        if microphone_name.startswith(starting_name):
+            print(f'AUX_OUTPUT found: {microphone_name} at index {i}')
+            return i
+    raise ValueError(f'AUX_OUTPUT not found starting with: {starting_name}')
+APP_OUTPUT_ID = get_mic_index(APP_OUTPUT_NAME)
+
+
+
+
+
+
 RECORD_TIMEOUT = int(getenv('RECORD_TIMEOUT'))
 PHRASE_TIMEOUT = int(getenv('PHRASE_TIMEOUT'))
 INPUT_LANGUAGE = getenv('TARGET_LANGUAGE_CODE')
