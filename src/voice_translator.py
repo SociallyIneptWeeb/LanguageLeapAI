@@ -1,3 +1,5 @@
+import speech_recognition as sr
+
 import wave
 from os import getenv
 from pathlib import Path
@@ -18,7 +20,28 @@ load_dotenv()
 USE_DEEPL = getenv('USE_DEEPL', 'False').lower() in ('true', '1', 't')
 DEEPL_AUTH_KEY = getenv('DEEPL_AUTH_KEY')
 TARGET_LANGUAGE = getenv('TARGET_LANGUAGE_CODE')
-MIC_ID = int(getenv('MICROPHONE_ID'))
+
+MIC_NAME = getenv('MICROPHONE_INPUT_NAME')
+def get_mic_index(starting_name):
+    for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
+        if microphone_name.startswith(starting_name):
+            print(f'MICROPHONE_INPUT found: {microphone_name} at index {i}')
+            return i
+    raise ValueError(f'MICROPHONE_INPUT not found starting with: {starting_name}')
+MIC_ID = get_mic_index(MIC_NAME)
+
+#just to check if it's found i have no clue what i'm doing
+APP_OUTPUT_NAME = getenv('AUX_OUTPUT_NAME')
+def get_mic_index(starting_name):
+    for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
+        if microphone_name.startswith(starting_name):
+            print(f'AUX_OUTPUT found: {microphone_name} at index {i}')
+            return i
+    raise ValueError(f'AUX_OUTPUT not found starting with: {starting_name}')
+APP_OUTPUT_ID = get_mic_index(APP_OUTPUT_NAME)
+
+
+
 RECORD_KEY = getenv('MIC_RECORD_KEY')
 LOGGING = getenv('LOGGING', 'False').lower() in ('true', '1', 't')
 MIC_AUDIO_PATH = Path(__file__).resolve().parent / r'audio/mic.wav'

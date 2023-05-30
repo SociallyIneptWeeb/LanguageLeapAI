@@ -1,3 +1,5 @@
+import speech_recognition as sr
+
 from os import getenv
 from pathlib import Path
 from threading import Thread
@@ -10,9 +12,29 @@ from modules.audio_to_device import play_voice
 
 load_dotenv()
 
+
+
+
 # Audio devices
-SPEAKERS_INPUT_ID = int(getenv('VOICEMEETER_INPUT_ID'))
-APP_INPUT_ID = int(getenv('CABLE_INPUT_ID'))
+MIC_NAME = getenv('VOICEMEETER_INPUT_NAME')
+def get_mic_index(starting_name):
+    for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
+        if microphone_name.startswith(starting_name):
+            print(f'VOICEMEETER_INPUT found: {microphone_name} at index {i}')
+            return i
+    raise ValueError(f'VOICEMEETER_INPUT not found starting with: {starting_name}')
+SPEAKERS_INPUT_ID = get_mic_index(MIC_NAME)
+
+MIC_NAME = getenv('CABLE_INPUT_NAME')
+def get_mic_index(starting_name):
+    for i, microphone_name in enumerate(sr.Microphone.list_microphone_names()):
+        if microphone_name.startswith(starting_name):
+            print(f'CABLE_INPUT found: {microphone_name} at index {i}')
+            return i
+    raise ValueError(f'CABLE_INPUT not found starting with: {starting_name}')
+APP_INPUT_ID = get_mic_index(MIC_NAME)
+
+
 
 # Voicevox settings
 BASE_URL = getenv('VOICEVOX_BASE_URL')
